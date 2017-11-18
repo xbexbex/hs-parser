@@ -82,7 +82,7 @@ async function getStuff(id) {
           callStuff(articles + breakAmount);
           console.log(articles);
         } else {
-          console('gj');
+          console.log('gj');
         }
       } else {
         writer.write(',');
