@@ -4,12 +4,13 @@ const fs = require('fs');
 const flatten = require('flat')
 
 const secretKey = 'Basic dGVhbTk6YlJ6NVFZSm13dlNUR0gyaA==';
-let writer = fs.createWriteStream('oneliner.json');
+let writer = fs.createWriteStream('oneliner1.json');
 let articles = 0;
 let writes = 0;
 let len = 0;
 let ids;
 let nameid = 1;
+let breakAmount = 5000;
 
 writer.write('[');
 
@@ -31,7 +32,7 @@ const req = https.request(options, (res) => {
   res.on('end', function(){
     ids = JSON.parse(body).articleIds;
     len = JSON.parse(body).articleIds.length;
-    callStuff(5000);
+    callStuff(breakAmount);
   });
 });
 req.on('error', (e) => {
@@ -74,9 +75,12 @@ async function getStuff(id) {
         writer.write(']');
         writer.end();
         if (writes !== len) {
-          const name = 'oneliner' + (nameid + 1) + '.json';
+          nameid++;
+          const name = 'oneliner' + (nameid) + '.json';
           writer = fs.createWriteStream(name);
-          callStuff(articles + 5000);
+          writer.write('[');
+          callStuff(articles + breakAmount);
+          console.log(articles);
         } else {
           console('gj');
         }
