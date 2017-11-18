@@ -75,8 +75,10 @@ async function getStuff(id) {
         writer.end();
         if (writes !== len) {
           const name = 'oneliner' + (nameid + 1) + '.json';
-          let writer = fs.createWriteStream(name);
+          writer = fs.createWriteStream(name);
           callStuff(articles + 5000);
+        } else {
+          console('gj');
         }
       } else {
         writer.write(',');
@@ -90,7 +92,7 @@ async function getStuff(id) {
   req.end();
 }
 
-console.log('fuken done');
+console.log('Running...');
 
 /*const options = {
   hostname: 'ultrahack.hs.fi',
